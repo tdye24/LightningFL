@@ -1,0 +1,15 @@
+python main.py \
+        -algorithm fedavg \
+        -dataset cifar10 \
+        -model cifar10 \
+        --num-rounds 100 \
+        --eval-interval 1 \
+        --clients-per-round 10 \
+        --epoch 5 \
+        --batch-size 10 \
+        --lr 0.01 \
+        --lr-decay 0.99 \
+        --decay-step 1 \
+        --alpha 0.1 \
+        --seed 24 \
+        --cuda True
