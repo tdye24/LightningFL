@@ -28,8 +28,8 @@ class CLIENT:
 
         criterion = torch.nn.CrossEntropyLoss()
         optimizer = optim.SGD(params=model.parameters(),
-                              lr=self.config.lr * self.config.lr_decay ** (round_th / self.config.decay_step),
-                              weight_decay=1e-3)
+                              lr=self.config.lr * self.config.lrDecay ** (round_th / self.config.decayStep),
+                              weight_decay=1e-4)
 
         meanLoss = []
         for epoch in range(self.config.epoch):

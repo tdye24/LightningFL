@@ -33,7 +33,7 @@ class SERVER:
 
     def setup_clients(self):
         users, trainLoaders, testLoaders = setup_datasets(dataset=self.config.dataset,
-                                                          batch_size=self.config.batch_size)
+                                                          batch_size=self.config.batchSize)
         clients = [
             CLIENT(user_id=user_id,
                    trainLoader=trainLoaders[user_id],
@@ -44,7 +44,7 @@ class SERVER:
 
     def select_clients(self, round_th):
         np.random.seed(seed=self.config.seed + round_th)
-        return np.random.choice(self.clients, self.config.clients_per_round, replace=False)
+        return np.random.choice(self.clients, self.config.clientsPerRound, replace=False)
 
     def setup_surrogates(self):
         surrogates = [
@@ -52,7 +52,7 @@ class SERVER:
                    trainLoader=None,
                    testLoader=None,
                    config=self.config)
-            for i in range(self.config.clients_per_round)]
+            for i in range(self.config.clientsPerRound)]
         return surrogates
 
     def clear(self):
@@ -63,7 +63,7 @@ class SERVER:
 
     def federate(self):
         print(f"Training with {len(self.clients)} clients!")
-        for i in tqdm(range(self.config.num_rounds)):
+        for i in tqdm(range(self.config.numRounds)):
             self.selected_clients = self.select_clients(round_th=i)
             for k in range(len(self.selected_clients)):
                 surrogate = self.surrogates[k]
@@ -79,7 +79,7 @@ class SERVER:
             # update global params
             self.params = fedAverage(self.updates)
 
-            if i == 0 or (i + 1) % self.config.eval_interval == 0:
+            if i == 0 or (i + 1) % self.config.evalInterval == 0:
                 print(f"\nRound {i}")
                 # test on training set
                 trainingAccList, trainingLossList = self.test(dataset='train')

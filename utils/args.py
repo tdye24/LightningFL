@@ -9,32 +9,32 @@ DATASETS = ['cifar10']
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-algorithm',
+    parser.add_argument('--algorithm',
                         help='algorithm',
                         choices=ALGORITHMS,
                         required=True)
 
-    parser.add_argument('-dataset',
+    parser.add_argument('--dataset',
                         help='name of dataset',
                         choices=DATASETS,
                         required=True)
 
-    parser.add_argument('-model',
+    parser.add_argument('--model',
                         help='name of model',
                         type=str,
                         required=True)
 
-    parser.add_argument('--num-rounds',
+    parser.add_argument('--numRounds',
                         help='# of communication round',
                         type=int,
                         default=100)
 
-    parser.add_argument('--eval-interval',
+    parser.add_argument('--evalInterval',
                         help='communication rounds between two evaluation',
                         type=int,
                         default=1)
 
-    parser.add_argument('--clients-per-round',
+    parser.add_argument('--clientsPerRound',
                         help='# of selected clients per round',
                         type=int,
                         default=1)
@@ -44,7 +44,7 @@ def parse_args():
                         type=int,
                         default=1)
 
-    parser.add_argument('--batch-size',
+    parser.add_argument('--batchSize',
                         help='batch size when clients train on data',
                         type=int,
                         default=1)
@@ -54,12 +54,12 @@ def parse_args():
                         type=float,
                         default=3e-4)
 
-    parser.add_argument('--lr-decay',
+    parser.add_argument('--lrDecay',
                         help='decay rate for learning rate',
                         type=float,
                         default=0.99)
 
-    parser.add_argument('--decay-step',
+    parser.add_argument('--decayStep',
                         help='decay rate for learning rate',
                         type=int,
                         default=200)
