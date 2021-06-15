@@ -1,5 +1,7 @@
-from client import CLIENT
+from .client import CLIENT
+from .server import SERVER
 
 __all__ = [
-    'CLIENT'
+    'CLIENT',
+    'SERVER'
 ]

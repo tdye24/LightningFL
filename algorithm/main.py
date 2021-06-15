@@ -1,7 +1,6 @@
-import torch
 import wandb
-from utils.utils import parse_args, setup_seed
-from algorithm.fedavg.server import SERVER
+from utils import *
+from algorithm.fedavg import SERVER
 
 
 if __name__ == '__main__':
@@ -28,25 +27,5 @@ if __name__ == '__main__':
     config = wandb.config
     config.update(args)
 
-    # use_cuda = config.cuda and torch.cuda.is_available()
-    # device = torch.device("cuda" if use_cuda else "cpu")
-    # kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
-
-    setup_seed(config.seed)
     server = SERVER(config=config)
     server.federate()
-    # for epoch in range(1, config.epochs + 1):
-    #     print(f"epoch: {epoch}, training")
-    #     train_summary = train(model, device, train_loader, optimizer)
-    #     print(f"epoch: {epoch}, test")
-    #     test_summary = test(config, model, device, test_loader, classes)
-    #
-    #     summary = {}
-    #     summary.update(train_summary)
-    #     summary.update(test_summary)
-    #     wandb.log(summary)
-    #
-    # # WandB – Save the model checkpoint. This automatically saves a file to the cloud and associates it with the
-    # # current run.
-    # torch.save(model.state_dict(), "model.h5")
-    # wandb.save('model.h5')

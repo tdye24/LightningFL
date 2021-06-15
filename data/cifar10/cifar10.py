@@ -3,6 +3,8 @@ import random
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from tensorflow import keras
+from utils import *
+from prettytable import PrettyTable
 
 
 class CIFAR10DATASET(Dataset):
@@ -88,13 +90,14 @@ def _get_cifar10_dataLoaders(X, Y, batch_size=10, transform=None, rand_set_all=N
 
 def get_cifar10_dataLoaders(batch_size=10, train_transform=None, test_transform=None):
     # todo tdye: Note that the random seed might affect the model initialization, so reset it latter
-    # setup_seed(24)
+    setup_seed(24)
     (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
     y_train = y_train.reshape((50000,))
     y_test = y_test.reshape((10000,))
 
-    print("x_train", x_train.shape, "y_train", y_train.shape)
-    print("x_test", x_test.shape, "y_test", y_test.shape)
+    table = PrettyTable(['TrainingX.', 'TrainingY.', 'TestX.', 'TestY.'])
+    table.add_row([x_train.shape, y_train.shape, x_test.shape, y_test.shape])
+    print(table)
 
     train_all_clients, trainLoaders, rand_set_all = _get_cifar10_dataLoaders(X=x_train, Y=y_train,
                                                                              batch_size=batch_size,

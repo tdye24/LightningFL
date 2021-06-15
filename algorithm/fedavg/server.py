@@ -18,6 +18,8 @@ class SERVER:
         self.losses = []
         self.accs = []
         self.updates = []
+        # affect server initialization
+        setup_seed(config.seed)
         self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model)
         self.params = self.model.state_dict()
         self.optimal = {
@@ -51,7 +53,6 @@ class SERVER:
                    testLoader=None,
                    config=self.config)
             for i in range(self.config.clients_per_round)]
-        # for i in range(min(config.mp, config.clients_per_round))]
         return surrogates
 
     def clear(self):

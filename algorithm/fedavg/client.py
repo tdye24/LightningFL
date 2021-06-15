@@ -1,7 +1,6 @@
 import torch
-import numpy as np
+from utils import *
 import torch.optim as optim
-from utils.utils import select_model
 
 
 class CLIENT:
@@ -11,7 +10,6 @@ class CLIENT:
         use_cuda = config.cuda and torch.cuda.is_available()
         self.device = torch.device("cuda" if use_cuda else "cpu")
         self.model = select_model(algorithm=config.algorithm, model_name=config.model)
-        # todo tdye
         self.trainLoader = trainLoader
         self.testLoader = testLoader
 
