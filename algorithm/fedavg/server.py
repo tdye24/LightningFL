@@ -108,6 +108,15 @@ class SERVER:
         testAcc = avgMetric(testAccList)
         testLoss = avgMetric(testLossList)
 
+        # post data error, encoder error, trainingAcc. format
+        summary = {
+            "TrainingAcc.": trainingAcc,
+            "TestAcc.": testAcc,
+            "TrainingLoss.": trainingLoss,
+            "TestLoss.": testLoss
+        }
+        wandb.log(summary)
+
         table = PrettyTable(['TrainingAcc.', 'TestAcc.', 'TrainingLoss.', 'TestLoss.'])
 
         if trainingAcc > self.optimal['trainingAcc']:
@@ -132,10 +141,3 @@ class SERVER:
             testLoss = round(testLoss, 3)
         table.add_row([trainingAcc, testAcc, trainingLoss, testLoss])
         print(table)
-        summary = {
-            "TrainingAcc.": trainingAcc,
-            "TestAcc.": testAcc,
-            "TrainingLoss.": trainingLoss,
-            "TestLoss.": testLoss
-        }
-        wandb.log(summary)

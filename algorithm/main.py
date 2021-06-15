@@ -1,3 +1,8 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../')))
+
 import wandb
 from utils import *
 from algorithm.fedavg import SERVER
