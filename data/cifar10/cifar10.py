@@ -3,7 +3,7 @@ import random
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from tensorflow import keras
-from utils import *
+from utils.args import setup_seed
 from prettytable import PrettyTable
 
 
