@@ -87,7 +87,7 @@ class SERVER:
                 testAccList, testLossList = self.test(dataset='test')
 
                 # print and log
-                self.printAndLog(trainingAccList, testAccList, trainingLossList, testLossList)
+                self.printAndLog(i, trainingAccList, testAccList, trainingLossList, testLossList)
 
             self.clear()
 
@@ -102,7 +102,7 @@ class SERVER:
             lossList.append((samplesNum, loss))
         return accList, lossList
 
-    def printAndLog(self, trainingAccList, testAccList, trainingLossList, testLossList):
+    def printAndLog(self, round_th, trainingAccList, testAccList, trainingLossList, testLossList):
         trainingAcc = avgMetric(trainingAccList)
         trainingLoss = avgMetric(trainingLossList)
         testAcc = avgMetric(testAccList)
@@ -110,10 +110,11 @@ class SERVER:
 
         # post data error, encoder error, trainingAcc. format
         summary = {
-            "TrainingAcc.": trainingAcc,
-            "TestAcc.": testAcc,
-            "TrainingLoss.": trainingLoss,
-            "TestLoss.": testLoss
+            "round": round_th,
+            "TrainingAcc": trainingAcc,
+            "TestAcc": testAcc,
+            "TrainingLoss": trainingLoss,
+            "TestLoss": testLoss
         }
         wandb.log(summary)
 
