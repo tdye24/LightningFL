@@ -81,7 +81,7 @@ def _get_cifar10_dataLoaders(X, Y, batch_size=10, transform=None, rand_set_all=N
     clients = [i for i in range(100)]
     for user_id in clients:
         dataset = CIFAR10DATASET(X, Y, ids=dict_users[user_id], transform=transform)
-        data_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=0)
+        data_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=4)
 
         dataLoaders[user_id] = data_loader
 
