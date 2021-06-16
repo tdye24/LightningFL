@@ -6,7 +6,6 @@ from torchvision.transforms import transforms
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
 
 # models
-# FedAvg
 from models import *
 
 
@@ -39,6 +38,9 @@ def select_model(algorithm, model_name):
             model = FedAvg_CIFAR10()
         else:
             print(f"Unimplemented Model {model_name}")
+    elif algorithm == 'fedmc':
+        if model_name == 'cifar10':
+            model = FedMC_CIFAR10()
     else:
         print(f"Unimplemented Algorithm {algorithm}")
     return model

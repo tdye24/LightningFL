@@ -3,8 +3,8 @@ import torch
 import numpy as np
 import random
 
-ALGORITHMS = ['fedavg']
-DATASETS = ['cifar10']
+ALGORITHMS = ['fedavg', 'fedmc']
+DATASETS = ['cifar10', 'mnist']
 
 
 def parse_args():
@@ -78,6 +78,17 @@ def parse_args():
                         help='using cuda',
                         type=bool,
                         default=True)
+
+    parser.add_argument('--mu',
+                        help='coefficient for balancing cross entropy loss and critic loss',
+                        type=float,
+                        default=0.1)
+
+    parser.add_argument('--omega',
+                        help='coefficient for balancing w-distance loss and gradient penalty loss',
+                        type=float,
+                        default=0.1)
+
     return parser.parse_args()
 
 

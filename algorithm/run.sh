@@ -1,7 +1,7 @@
 python main.py \
-        -algorithm fedavg \
-        -dataset cifar10 \
-        -model cifar10 \
+        --algorithm fedavg \
+        --dataset cifar10 \
+        --model cifar10 \
         --numRounds 100 \
         --evalInterval 1 \
         --clientsPerRound 10 \
@@ -11,5 +11,5 @@ python main.py \
         --lrDecay 0.99 \
         --decayStep 1 \
         --alpha 0.1 \
-        --seed 24 \
+        --seed 12 \
         --cuda True
