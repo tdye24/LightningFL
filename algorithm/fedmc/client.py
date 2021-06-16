@@ -24,8 +24,8 @@ class CLIENT:
 
     def calc_gradient_penalty(self, model, real_data, fake_data):
         assert not (real_data.requires_grad or fake_data.requires_grad)
-        alpha = torch.rand(self.config.batchSize, 1)
-        alpha = alpha.expand(self.config.batchSize, int(real_data.nelement() / self.config.batchSize)).contiguous().view(self.config.batchSize, 3, 32, 32)
+        alpha = torch.rand(real_data.shape[0], 1)
+        alpha = alpha.expand(self.config.batchSize, real_data.shape[1]).contiguous()
         alpha = alpha.to(self.device)
         interpolates = alpha * real_data + ((torch.ones_like(alpha) - alpha) * fake_data)
         interpolates = interpolates.to(self.device)

@@ -12,4 +12,6 @@ python main.py \
         --decayStep 1 \
         --alpha 0.1 \
         --seed 12 \
-        --cuda True
+        --cuda True \
+        --mu 0.001 \
+        --omega 10

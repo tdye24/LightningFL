@@ -2,7 +2,7 @@ import copy
 import wandb
 import numpy as np
 from utils import *
-from algorithm.fedavg import CLIENT
+from algorithm.fedavg.client import CLIENT
 from tqdm import tqdm
 from prettytable import PrettyTable
 

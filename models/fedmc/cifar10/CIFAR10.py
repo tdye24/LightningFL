@@ -38,34 +38,14 @@ class CIFAR10(nn.Module):
             nn.Flatten()
         )
 
-        self.shared_decoder = nn.Sequential(
-            nn.Linear(64 * 5 * 5, 3 * 32 * 32)
-        )
-        self.private_decoder = nn.Sequential(
-            nn.Linear(64 * 5 * 5, 3 * 32 * 32)
-        )
-
         self.clf = nn.Sequential(
-            nn.Linear(3 * 32 * 32 * 2, 512),
+            nn.Linear(64 * 5 * 5 * 2, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.5),
             nn.Linear(512, 10)
         )
 
         self.critic = nn.Sequential(
-            nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-            nn.Dropout(p=0.25),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-            nn.Dropout(p=0.25),
-            nn.Flatten(),
             nn.Linear(64 * 5 * 5, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.5),
@@ -73,11 +53,9 @@ class CIFAR10(nn.Module):
         )
 
     def forward(self, x):
-        gFeature = self.shared_decoder(self.shared_encoder(x))
-        lFeature = self.private_decoder(self.private_encoder(x))
+        gFeature = self.shared_encoder(x)
+        lFeature = self.private_encoder(x)
         feature = torch.cat((gFeature, lFeature), dim=-1)
-        gFeature = gFeature.view(-1, 3, 32, 32)
-        lFeature = lFeature.view(-1, 3, 32, 32)
         gValue = self.critic(gFeature)
         lValue = self.critic(lFeature)
         out = self.clf(feature)
@@ -90,10 +68,12 @@ class CIFAR10(nn.Module):
 if __name__ == '__main__':
     model = CIFAR10()
     x = torch.rand((50, 3, 32, 32))
-    output, gD, lD = model(x)
-    print(f'{x.shape}->{output.shape}')
-    print(f'{x.shape}->g_critic_out{gD.shape}')
-    print(f'{x.shape}->l_critic_out{lD.shape}')
+    gFeature_, lFeature_, gValue_, lValue_, output_ = model(x)
+    print(f'{x.shape}->gFeature_{gFeature_.shape}')
+    print(f'{x.shape}->lFeature_{lFeature_.shape}')
+    print(f'{x.shape}->gValue{gValue_.shape}')
+    print(f'{x.shape}->lValue{lValue_.shape}')
+    print(f'{x.shape}->output{output_.shape}')
 
     print("Parameters in total {}".format(sum(x.numel() for x in model.parameters())))
 
