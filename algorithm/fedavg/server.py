@@ -80,7 +80,7 @@ class SERVER:
             self.params = fedAverage(self.updates)
 
             if i == 0 or (i + 1) % self.config.evalInterval == 0:
-                print(f"\nRound {i}")
+                # print(f"\nRound {i}")
                 # test on training set
                 trainingAccList, trainingLossList = self.test(dataset='train')
                 # test on test set
@@ -118,27 +118,27 @@ class SERVER:
         }
         wandb.log(summary)
 
-        table = PrettyTable(['TrainingAcc.', 'TestAcc.', 'TrainingLoss.', 'TestLoss.'])
-
-        if trainingAcc > self.optimal['trainingAcc']:
-            self.optimal['trainingAcc'] = trainingAcc
-            trainingAcc = "\033[1;31m" + f"{round(trainingAcc, 3)}" + "\033[0m"
-        else:
-            trainingAcc = round(trainingAcc, 3)
-        if testAcc > self.optimal['testAcc']:
-            self.optimal['testAcc'] = testAcc
-            testAcc = "\033[1;31m" + f"{round(testAcc, 3)}" + "\033[0m"
-        else:
-            testAcc = round(testAcc, 3)
-        if trainingLoss < self.optimal['trainingLoss']:
-            self.optimal['trainingLoss'] = trainingLoss
-            trainingLoss = "\033[1;31m" + f"{round(trainingLoss, 3)}" + "\033[0m"
-        else:
-            trainingLoss = round(trainingLoss, 3)
-        if testLoss < self.optimal['testLoss']:
-            self.optimal['testLoss'] = testLoss
-            testLoss = "\033[1;31m" + f"{round(testLoss, 3)}" + "\033[0m"
-        else:
-            testLoss = round(testLoss, 3)
-        table.add_row([trainingAcc, testAcc, trainingLoss, testLoss])
-        print(table)
+        # table = PrettyTable(['TrainingAcc.', 'TestAcc.', 'TrainingLoss.', 'TestLoss.'])
+        #
+        # if trainingAcc > self.optimal['trainingAcc']:
+        #     self.optimal['trainingAcc'] = trainingAcc
+        #     trainingAcc = "\033[1;31m" + f"{round(trainingAcc, 3)}" + "\033[0m"
+        # else:
+        #     trainingAcc = round(trainingAcc, 3)
+        # if testAcc > self.optimal['testAcc']:
+        #     self.optimal['testAcc'] = testAcc
+        #     testAcc = "\033[1;31m" + f"{round(testAcc, 3)}" + "\033[0m"
+        # else:
+        #     testAcc = round(testAcc, 3)
+        # if trainingLoss < self.optimal['trainingLoss']:
+        #     self.optimal['trainingLoss'] = trainingLoss
+        #     trainingLoss = "\033[1;31m" + f"{round(trainingLoss, 3)}" + "\033[0m"
+        # else:
+        #     trainingLoss = round(trainingLoss, 3)
+        # if testLoss < self.optimal['testLoss']:
+        #     self.optimal['testLoss'] = testLoss
+        #     testLoss = "\033[1;31m" + f"{round(testLoss, 3)}" + "\033[0m"
+        # else:
+        #     testLoss = round(testLoss, 3)
+        # table.add_row([trainingAcc, testAcc, trainingLoss, testLoss])
+        # print(table)
