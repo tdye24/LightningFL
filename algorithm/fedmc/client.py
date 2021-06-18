@@ -2,6 +2,7 @@ import torch
 from utils import *
 from torch import autograd
 import torch.optim as optim
+import numpy as np
 
 
 class CLIENT:
@@ -76,6 +77,11 @@ class CLIENT:
             if key.startswith('critic'):
                 param.requires_grad = True
 
+        # loss NAN detection
+        if np.isnan(sum(meanLoss) / len(meanLoss)):
+            print(f"client {self.user_id}, loss NAN")
+            exit(0)
+
         trainSamplesNum, update = self.trainSamplesNum, self.get_params()
         return trainSamplesNum, update, sum(meanLoss) / len(meanLoss)
 
@@ -113,6 +119,11 @@ class CLIENT:
         for (key, param) in model.named_parameters():
             if key.startswith('shared'):
                 param.requires_grad = True
+
+        # loss NAN detection
+        if np.isnan(sum(meanLoss) / len(meanLoss)):
+            print(f"client {self.user_id}, loss NAN")
+            exit(0)
 
         trainSamplesNum, update = self.trainSamplesNum, self.get_params()
         return trainSamplesNum, update, sum(meanLoss) / len(meanLoss)
