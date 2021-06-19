@@ -89,6 +89,11 @@ def parse_args():
                         type=float,
                         default=0.1)
 
+    parser.add_argument('--diffCo',
+                        help='coefficient for balancing classification loss and regularizer loss (model difference) in FedProx',
+                        type=float,
+                        default=0.1)
+
     return parser.parse_args()
 
 

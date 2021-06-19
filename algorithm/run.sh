@@ -14,4 +14,5 @@ python main.py \
         --seed 12 \
         --cuda True \
         --mu 0.001 \
-        --omega 10
+        --omega 10 \
+        --diffCo 0.1
