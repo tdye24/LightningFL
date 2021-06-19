@@ -31,7 +31,7 @@ def setup_datasets(dataset, batch_size):
 
 def select_model(algorithm, model_name):
     model = None
-    if algorithm == 'fedavg':
+    if algorithm == 'fedavg' or algorithm == 'fedprox':
         if model_name == 'mnist':
             model = FedAvg_MNIST()
         elif model_name == 'cifar10':

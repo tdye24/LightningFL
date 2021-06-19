@@ -7,6 +7,7 @@ import wandb
 from utils import *
 from algorithm.fedavg.server import SERVER as FedAvg_SERVER
 from algorithm.fedmc.server import SERVER as FedMC_SERVER
+from algorithm.fedprox.server import SERVER as FedProx_SERVER
 
 
 if __name__ == '__main__':
@@ -38,4 +39,6 @@ if __name__ == '__main__':
         server = FedAvg_SERVER(config=config)
     elif config.algorithm == 'fedmc':
         server = FedMC_SERVER(config=config)
+    elif config.algorithm == 'fedprox':
+        server = FedProx_SERVER(config=config)
     server.federate()

@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import random
 
-ALGORITHMS = ['fedavg', 'fedmc']
+ALGORITHMS = ['fedavg', 'fedmc', 'fedprox']
 DATASETS = ['cifar10', 'mnist']
 
 
