@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import random
 
-ALGORITHMS = ['fedavg', 'fedmc', 'fedprox', 'fedsp']
+ALGORITHMS = ['fedavg', 'fedmc', 'fedprox', 'fedsp', 'lgfedavg']
 DATASETS = ['cifar10', 'mnist']
 
 
@@ -93,6 +93,11 @@ def parse_args():
                         help='coefficient for balancing classification loss and regularizer loss (model difference) in FedProx',
                         type=float,
                         default=0.1)
+
+    parser.add_argument('--depth',
+                        help='depth for private layers in lg-fedavg',
+                        type=int,
+                        default=1)
 
     return parser.parse_args()
 

@@ -44,6 +44,9 @@ def select_model(algorithm, model_name):
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
             model = FedSP_CIFAR10()
+    elif algorithm == 'lgfedavg':
+        if model_name == 'cifar10':
+            model = LG_FedAvg_CIFAR10()
     else:
         print(f"Unimplemented Algorithm {algorithm}")
     return model

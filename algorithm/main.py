@@ -9,6 +9,7 @@ from algorithm.fedavg.server import SERVER as FedAvg_SERVER
 from algorithm.fedmc.server import SERVER as FedMC_SERVER
 from algorithm.fedprox.server import SERVER as FedProx_SERVER
 from algorithm.fedsp.server import SERVER as FedSP_SERVER
+from algorithm.lgfedavg.server import SERVER as LG_FedAvg_SERVER
 
 
 if __name__ == '__main__':
@@ -44,4 +45,6 @@ if __name__ == '__main__':
         server = FedProx_SERVER(config=config)
     elif config.algorithm == 'fedsp':
         server = FedSP_SERVER(config=config)
+    elif config.algorithm == 'lgfedavg':
+        server = LG_FedAvg_SERVER(config=config)
     server.federate()
