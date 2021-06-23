@@ -95,7 +95,7 @@ def parse_args():
                         default=0.1)
 
     parser.add_argument('--depth',
-                        help='depth for private layers in lg-fedavg',
+                        help='depth for shared layers in lg-fedavg',
                         type=int,
                         default=1)
 
