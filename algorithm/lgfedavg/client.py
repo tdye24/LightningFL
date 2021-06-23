@@ -83,6 +83,7 @@ class CLIENT:
 
     def set_shared_params(self, params):
         keys = list(self.model.state_dict().keys())
+        keys = list(reversed(keys))  # [top -> down(near the data)]
         tmp_params = self.get_params()
         for (key, value) in params.items():
             if keys.index(key) < 2 * self.config.depth:
