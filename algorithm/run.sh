@@ -15,4 +15,5 @@ python main.py \
         --cuda True \
         --mu 0.001 \
         --omega 10 \
-        --diffCo 0.1
+        --diffCo 0.1 \
+        --depth 1
