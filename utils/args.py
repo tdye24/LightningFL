@@ -4,7 +4,7 @@ import numpy as np
 import random
 
 ALGORITHMS = ['fedavg', 'fedmc', 'fedprox', 'fedsp', 'lgfedavg']
-DATASETS = ['cifar10', 'mnist']
+DATASETS = ['cifar10', 'mnist', 'cifar100']
 
 
 def parse_args():
