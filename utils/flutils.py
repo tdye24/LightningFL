@@ -4,6 +4,7 @@ from torchvision.transforms import transforms
 
 # datasets
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
+from data.cifar100.cifar100 import get_cifar100_dataLoaders
 
 # models
 from models import *
@@ -26,6 +27,22 @@ def setup_datasets(dataset, batch_size):
         users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=batch_size,
                                                                    train_transform=trainTransform,
                                                                    test_transform=testTransform)
+    elif dataset == 'cifar100':
+        trainTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225])
+        ])
+
+        testTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225])
+        ])
+        users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=batch_size,
+                                                                   train_transform=trainTransform,
+                                                                   test_transform=testTransform)
+
     return users, trainLoaders, testLoaders
 
 
@@ -36,6 +53,8 @@ def select_model(algorithm, model_name):
             model = FedAvg_MNIST()
         elif model_name == 'cifar10':
             model = FedAvg_CIFAR10()
+        elif model_name == 'cifar100':
+            model = FedAvg_CIFAR100()
         else:
             print(f"Unimplemented Model {model_name}")
     elif algorithm == 'fedmc':
