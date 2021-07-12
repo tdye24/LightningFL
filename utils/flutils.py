@@ -1,6 +1,4 @@
-
 from torchvision.transforms import transforms
-
 
 # datasets
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
@@ -40,8 +38,8 @@ def setup_datasets(dataset, batch_size):
                                  std=[0.229, 0.224, 0.225])
         ])
         users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=batch_size,
-                                                                   train_transform=trainTransform,
-                                                                   test_transform=testTransform)
+                                                                    train_transform=trainTransform,
+                                                                    test_transform=testTransform)
 
     return users, trainLoaders, testLoaders
 
@@ -63,6 +61,8 @@ def select_model(algorithm, model_name):
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
             model = FedSP_CIFAR10()
+        elif model_name == 'cifar100':
+            model = FedSP_CIFAR100()
     elif algorithm == 'lgfedavg':
         if model_name == 'cifar10':
             model = LG_FedAvg_CIFAR10()
