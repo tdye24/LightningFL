@@ -58,6 +58,8 @@ def select_model(algorithm, model_name):
     elif algorithm == 'fedmc':
         if model_name == 'cifar10':
             model = FedMC_CIFAR10()
+        elif model_name == 'cifar100':
+            model = FedMC_CIFAR100()
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
             model = FedSP_CIFAR10()
