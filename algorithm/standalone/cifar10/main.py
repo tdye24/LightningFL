@@ -27,8 +27,8 @@ testTransform = transforms.Compose([
                          std=[0.229, 0.224, 0.225])
 ])
 
-users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=50, train_transform=train_transform,
-                                                           test_transform=test_transform)
+users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=50, train_transform=trainTransform,
+                                                           test_transform=testTransform)
 
 epoch = 100
 lr = 0.1
