@@ -47,7 +47,7 @@ for user in users:
     for i in range(epoch):
         optimizer = optim.SGD(params=model.parameters(), lr=lr * (lr_decay ** i), weight_decay=1e-4)
         epoch_loss = []
-        for step, (data, labels) in enumerate(trainloader):
+        for step, (data, labels) in enumerate(trainLoader):
             data = data.cuda()
             labels = labels.cuda()
             optimizer.zero_grad()
@@ -60,10 +60,10 @@ for user in users:
 
         model.eval()
         total_right = 0
-        total_samples = len(testloader.sampler)
+        total_samples = len(testLoader.sampler)
         with torch.no_grad():
             batch_loss = []
-            for step, (data, labels) in enumerate(testloader):
+            for step, (data, labels) in enumerate(testLoader):
                 data = data.cuda()
                 labels = labels.cuda()
                 output = model(data)
