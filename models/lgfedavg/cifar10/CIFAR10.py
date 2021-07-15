@@ -42,10 +42,11 @@ if __name__ == '__main__':
     print(f'{_x.shape}->{_output.shape}')
     print("Parameters in total {}".format(sum(x.numel() for x in model.parameters())))
 
-    print("Comm.")
     total = 0
-    for key, param in model.named_parameters():
-        print(key)
-        if key.startswith('shared'):
-            total += param.numel()
+    keys = list(model.state_dict().keys())
+    keys = list(reversed(keys))  # [top -> down(near the data)]
+    print(keys)
+    for (key, value) in model.named_parameters():
+        if keys.index(key) < 2 * 2:
+            total += value.numel()
     print("Comm. Parameters {}".format(total))

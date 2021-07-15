@@ -68,6 +68,8 @@ def select_model(algorithm, model_name):
     elif algorithm == 'lgfedavg':
         if model_name == 'cifar10':
             model = LG_FedAvg_CIFAR10()
+        if model_name == 'cifar100':
+            model = LG_FedAvg_CIFAR100()
     else:
         print(f"Unimplemented Algorithm {algorithm}")
     return model

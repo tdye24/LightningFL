@@ -78,8 +78,16 @@ if __name__ == '__main__':
     print("Parameters in total {}".format(sum(x.numel() for x in model.parameters())))
 
     print("Comm.")
-    total = 0
+    share_encoder_total = 0
     for key, param in model.named_parameters():
-        if key.startswith('shared') or key.startswith('critic'):
-            total += param.numel()
-    print("Comm. Parameters {}".format(total))
+        if key.startswith('shared'):
+            share_encoder_total += param.numel()
+    print("Shared Encoder. Parameters {}".format(share_encoder_total))
+
+    critic_total = 0
+    for key, param in model.named_parameters():
+        if key.startswith('critic'):
+            critic_total += param.numel()
+    print("Critic. Parameters {}".format(critic_total))
+
+    print((share_encoder_total + critic_total) / 2)

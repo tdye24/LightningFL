@@ -39,7 +39,7 @@ users_acc_lst = {}
 
 for user in users:
     trainLoader, testLoader = trainLoaders[user], testLoaders[user]
-    setup_seed(12)
+    setup_seed(36)
     model = CIFAR10()
     model.cuda()
     model.train()
@@ -115,5 +115,5 @@ for i in range(epoch):
 
     acc = float(total_right) / total_samples
     round_acc_lst.append(acc)
-    print(f"Round {i}, acc: {acc}")
+    # print(f"Round {i}, acc: {acc}")
 print(f"Max Round Average Acc: {max(round_acc_lst)}")

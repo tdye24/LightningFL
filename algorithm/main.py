@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../')))
 
 import wandb
-from utils import *
+from utils.args import *
 from algorithm.fedavg.server import SERVER as FedAvg_SERVER
 from algorithm.fedmc.server import SERVER as FedMC_SERVER
 from algorithm.fedprox.server import SERVER as FedProx_SERVER
