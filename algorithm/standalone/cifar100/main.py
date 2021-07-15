@@ -82,7 +82,7 @@ for user in users:
     optimal_acc = max(acc_lst)
     users_acc_lst.update({
         user: {
-            'num_samples': len(testloader.sampler),
+            'num_samples': len(testLoader.sampler),
             'acc_lst': acc_lst,
             'optimal_acc': optimal_acc}
     })
