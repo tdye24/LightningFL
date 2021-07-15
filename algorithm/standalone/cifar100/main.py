@@ -8,7 +8,7 @@ from torchvision.transforms import transforms
 from utils.args import setup_seed
 import numpy as np
 
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../')))
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../../')))
 
 from data.cifar100.cifar100 import get_cifar100_dataLoaders
 from models.fedavg.cifar100.CIFAR100 import CIFAR100 as FedAVG_CIFAR100
