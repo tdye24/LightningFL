@@ -14,20 +14,20 @@ from data.cifar100.cifar100 import get_cifar100_dataLoaders
 from models.fedavg.cifar100.CIFAR100 import CIFAR100 as FedAVG_CIFAR100
 
 
-train_transform = transforms.Compose([
+trainTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225])
+        ])
+
+testTransform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5],
-                         std=[0.5, 0.5, 0.5])
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
 ])
 
-test_transform = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5],
-                         std=[0.5, 0.5, 0.5])
-])
-
-users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=50, train_transform=train_transform,
-                                                            test_transform=test_transform)
+users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=50, train_transform=trainTransform,
+                                                            test_transform=testTransform)
 
 epoch = 100
 lr = 0.1
@@ -114,5 +114,5 @@ for i in range(epoch):
 
     acc = float(total_right) / total_samples
     round_acc_lst.append(acc)
-    print(f"Round {i}, acc: {acc}")
+    # print(f"Round {i}, acc: {acc}")
 print(f"Max Round Average Acc: {max(round_acc_lst)}")
