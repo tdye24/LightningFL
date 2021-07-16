@@ -6,6 +6,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../')))
 
 from pyemd import emd
+from data.mnist.mnist import get_mnist_dataLoaders as get_mnist_dataLoaders
 from data.cifar10.cifar10 import get_cifar10_dataLoaders as get_cifar10_dataLoaders
 from data.cifar100.cifar100 import get_cifar100_dataLoaders as get_cifar100_dataLoaders
 
@@ -23,7 +24,10 @@ dataset = args.name
 N_class = None
 users, trainLoaders, testLoaders = None, None, None
 
-if dataset == 'cifar10':
+if dataset == 'mnist':
+    users, trainLoaders, testLoaders = get_mnist_dataLoaders(batch_size=10)
+    N_class = 10
+elif dataset == 'cifar10':
     users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=10)
     N_class = 10
 elif dataset == 'cifar100':
