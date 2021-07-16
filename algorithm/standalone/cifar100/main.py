@@ -9,7 +9,7 @@ import numpy as np
 
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../../')))
 
-from utils.args import setup_seed
+from utils.tools import setup_seed
 from data.cifar100.cifar100 import get_cifar100_dataLoaders
 from models.fedavg.cifar100.CIFAR100 import CIFAR100 as FedAVG_CIFAR100
 
@@ -38,7 +38,7 @@ users_acc_lst = {}
 
 for user in users:
     trainLoader, testLoader = trainLoaders[user], testLoaders[user]
-    setup_seed(36)
+    setup_seed(12)
     model = FedAVG_CIFAR100()
     model.cuda()
     model.train()

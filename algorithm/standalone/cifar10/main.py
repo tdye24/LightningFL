@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../../')))
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
 
 from models.fedavg.cifar10.CIFAR10 import CIFAR10
-from utils.args import setup_seed
+from utils.tools import setup_seed
 
 
 trainTransform = transforms.Compose([
@@ -39,7 +39,7 @@ users_acc_lst = {}
 
 for user in users:
     trainLoader, testLoader = trainLoaders[user], testLoaders[user]
-    setup_seed(36)
+    setup_seed(12)
     model = CIFAR10()
     model.cuda()
     model.train()

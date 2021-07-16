@@ -1,5 +1,5 @@
 import torch
-from utils import *
+from utils.flutils import *
 from torch import autograd
 import torch.optim as optim
 import numpy as np

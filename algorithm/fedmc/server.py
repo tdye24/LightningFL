@@ -1,7 +1,8 @@
 import copy
 import wandb
 import numpy as np
-from utils import *
+from utils.flutils import *
+from utils.tools import *
 from algorithm.fedmc.client import CLIENT
 from tqdm import tqdm
 from prettytable import PrettyTable

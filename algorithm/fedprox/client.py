@@ -1,6 +1,6 @@
 import copy
 import torch
-from utils import *
+from utils.flutils import *
 import torch.optim as optim
 import numpy as np
 
