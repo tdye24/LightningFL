@@ -11,7 +11,7 @@ class CLIENT:
         self.user_id = user_id
         use_cuda = config.cuda and torch.cuda.is_available()
         self.device = torch.device("cuda" if use_cuda else "cpu")
-        self.model = select_model(algorithm=config.algorithm, model_name=config.model)
+        self.model = select_model(algorithm=config.algorithm, model_name=config.model, mode=config.mode)
         self.trainLoader = trainLoader
         self.testLoader = testLoader
 

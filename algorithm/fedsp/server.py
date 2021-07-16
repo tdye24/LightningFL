@@ -21,7 +21,7 @@ class SERVER:
         self.updates = []
         # affect server initialization
         setup_seed(config.seed)
-        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model)
+        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model, mode=config.mode)
         self.params = self.model.state_dict()
         self.optimal = {
             'round': 0,

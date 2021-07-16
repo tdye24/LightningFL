@@ -1,3 +1,4 @@
+import torch
 from torchvision.transforms import transforms
 
 # datasets
@@ -55,7 +56,7 @@ def setup_datasets(dataset, batch_size):
     return users, trainLoaders, testLoaders
 
 
-def select_model(algorithm, model_name):
+def select_model(algorithm, model_name, mode='concat'):
     model = None
     if algorithm == 'fedavg' or algorithm == 'fedprox':
         if model_name == 'mnist':
@@ -73,7 +74,12 @@ def select_model(algorithm, model_name):
             model = FedMC_CIFAR100()
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
-            model = FedSP_CIFAR10()
+            if mode == 'concat':
+                model = FedSP_CIFAR10()
+            elif mode == 'addition':
+                model = FedSP_CIFAR10_Add()
+            else:
+                print(f"Unimplemented Mode {mode} for FedSP")
         elif model_name == 'cifar100':
             model = FedSP_CIFAR100()
     elif algorithm == 'lgfedavg':
@@ -115,17 +121,3 @@ def avgMetric(metricList):
     average = total_metric / total_weight
 
     return average
-
-
-def setup_seed(rs):
-    """
-    set random seed for reproducing experiments
-    :param rs: random seed
-    :return: None
-    """
-    torch.manual_seed(rs)
-    torch.cuda.manual_seed_all(rs)
-    np.random.seed(rs)
-    random.seed(rs)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False

@@ -96,4 +96,9 @@ def parse_args():
                         type=int,
                         default=1)
 
+    parser.add_argument('--mode',
+                        help='Integration of global encoder and local encoder',
+                        choices=['concat', 'addition', 'pooling'],
+                        default='concat')
+
     return parser.parse_args()
