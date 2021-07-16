@@ -4,7 +4,7 @@ import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from tensorflow import keras
 from torchvision.transforms import transforms
-from utils.args import setup_seed
+from utils.tools import *
 from prettytable import PrettyTable
 
 
