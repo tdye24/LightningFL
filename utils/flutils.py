@@ -1,6 +1,7 @@
 from torchvision.transforms import transforms
 
 # datasets
+from data.mnist.mnist import get_mnist_dataLoaders
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
 from data.cifar100.cifar100 import get_cifar100_dataLoaders
 
@@ -10,7 +11,17 @@ from models import *
 
 def setup_datasets(dataset, batch_size):
     users, trainLoaders, testLoaders = [], [], []
-    if dataset == 'cifar10':
+    if dataset == 'mnist':
+        trainTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])
+        testTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])
+        users, trainLoaders, testLoaders = get_mnist_dataLoaders(batch_size=batch_size, train_transform=trainTransform, test_transform=testTransform)
+    elif dataset == 'cifar10':
         trainTransform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],

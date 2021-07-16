@@ -38,7 +38,7 @@ users_acc_lst = {}
 
 for user in users:
     trainLoader, testLoader = trainLoaders[user], testLoaders[user]
-    setup_seed(12)
+    setup_seed(36)
     model = FedAVG_CIFAR100()
     model.cuda()
     model.train()
