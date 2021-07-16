@@ -6,7 +6,7 @@ from torchvision.transforms import transforms
 import numpy as np
 import random
 
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../')))
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../../')))
 
 from utils.tools import setup_seed
 from data.mnist.mnist import get_mnist_dataLoaders
@@ -33,7 +33,7 @@ users_acc_lst = {}
 
 for user in users:
     trainLoader, testLoader = trainLoaders[user], testLoaders[user]
-    setup_seed(12)
+    setup_seed(36)
     model = MNIST()
     model.cuda()
     model.train()
