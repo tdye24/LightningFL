@@ -76,7 +76,12 @@ def select_model(algorithm, model_name, mode='concat'):
             else:
                 print(f"Unimplemented Mode {mode} for FedMC")
         elif model_name == 'cifar100':
-            model = FedMC_CIFAR100()
+            if mode == 'concat':
+                model = FedMC_CIFAR100()
+            elif mode == 'addition':
+                model = FedMC_CIFAR100_Add()
+            else:
+                print(f"Unimplemented Mode {mode} for FedMC")
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
             if mode == 'concat':
@@ -86,7 +91,12 @@ def select_model(algorithm, model_name, mode='concat'):
             else:
                 print(f"Unimplemented Mode {mode} for FedSP")
         elif model_name == 'cifar100':
-            model = FedSP_CIFAR100()
+            if mode == 'concat':
+                model = FedSP_CIFAR100()
+            elif mode == 'addition':
+                model = FedSP_CIFAR100_Add()
+            else:
+                print(f"Unimplemented Mode {mode} for FedSP")
     elif algorithm == 'lgfedavg':
         if model_name == 'cifar10':
             model = LG_FedAvg_CIFAR10()

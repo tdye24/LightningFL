@@ -39,7 +39,7 @@ class CIFAR100(nn.Module):
         )
 
         self.clf = nn.Sequential(
-            nn.Linear(64 * 5 * 5 * 2, 512),
+            nn.Linear(64 * 5 * 5, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.5),
             nn.Linear(512, 100)
@@ -55,7 +55,7 @@ class CIFAR100(nn.Module):
     def forward(self, x):
         gFeature = self.shared_encoder(x)
         lFeature = self.private_encoder(x)
-        feature = torch.cat((gFeature, lFeature), dim=-1)
+        feature = gFeature + lFeature
         gValue = self.critic(gFeature)
         lValue = self.critic(lFeature)
         out = self.clf(feature)
