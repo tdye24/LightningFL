@@ -88,6 +88,8 @@ def select_model(algorithm, model_name, mode='concat'):
                 model = FedSP_CIFAR10()
             elif mode == 'addition':
                 model = FedSP_CIFAR10_Add()
+            elif mode == 'dropLocal':
+                model = FedSP_CIFAR100_DropLocal()
             else:
                 print(f"Unimplemented Mode {mode} for FedSP")
         elif model_name == 'cifar100':

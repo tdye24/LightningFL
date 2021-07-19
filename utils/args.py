@@ -98,7 +98,7 @@ def parse_args():
 
     parser.add_argument('--mode',
                         help='Integration of global encoder and local encoder',
-                        choices=['concat', 'addition', 'pooling'],
+                        choices=['concat', 'addition', 'pooling', 'dropLocal'],
                         default='concat')
 
     parser.add_argument('--earlyStopping',
