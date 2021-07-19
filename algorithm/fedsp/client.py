@@ -28,6 +28,12 @@ class CLIENT:
         model.to(self.device)
         model.train()
 
+        # hard early-stopping
+        # frozen
+        for (key, param) in model.named_parameters():
+            if key.startswith('private'):
+                param.requires_grad = False
+
         criterion = torch.nn.CrossEntropyLoss()
         optimizer = optim.SGD(params=model.parameters(),
                               lr=self.config.lr * self.config.lrDecay ** (round_th / self.config.decayStep),
@@ -49,6 +55,11 @@ class CLIENT:
         if np.isnan(sum(meanLoss) / len(meanLoss)):
             print(f"client {self.user_id}, loss NAN")
             exit(0)
+
+        # unfrozen
+        for (key, param) in model.named_parameters():
+            if key.startswith('private'):
+                param.requires_grad = True
 
         trainSamplesNum, update = self.trainSamplesNum, self.get_params()
         return trainSamplesNum, update, sum(meanLoss) / len(meanLoss)

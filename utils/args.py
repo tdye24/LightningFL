@@ -101,4 +101,9 @@ def parse_args():
                         choices=['concat', 'addition', 'pooling'],
                         default='concat')
 
+    parser.add_argument('--earlyStopping',
+                        help='do early-stopping for fedsp or fedmc',
+                        type=bool,
+                        default=False)
+
     return parser.parse_args()
