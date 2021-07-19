@@ -29,10 +29,11 @@ class CLIENT:
         model.train()
 
         # hard early-stopping
-        # frozen
-        for (key, param) in model.named_parameters():
-            if key.startswith('private'):
-                param.requires_grad = False
+        if round_th >= 36 and self.config.earlyStopping:
+            # frozen
+            for (key, param) in model.named_parameters():
+                if key.startswith('private'):
+                    param.requires_grad = False
 
         criterion = torch.nn.CrossEntropyLoss()
         optimizer = optim.SGD(params=model.parameters(),
@@ -56,10 +57,12 @@ class CLIENT:
             print(f"client {self.user_id}, loss NAN")
             exit(0)
 
-        # unfrozen
-        for (key, param) in model.named_parameters():
-            if key.startswith('private'):
-                param.requires_grad = True
+        # hard early stopping,, todo no use
+        if round_th >= 36 and self.config.earlyStopping:
+            # unfrozen
+            for (key, param) in model.named_parameters():
+                if key.startswith('private'):
+                    param.requires_grad = True
 
         trainSamplesNum, update = self.trainSamplesNum, self.get_params()
         return trainSamplesNum, update, sum(meanLoss) / len(meanLoss)
