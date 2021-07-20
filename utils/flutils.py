@@ -80,6 +80,8 @@ def select_model(algorithm, model_name, mode='concat'):
                 model = FedMC_CIFAR100()
             elif mode == 'addition':
                 model = FedMC_CIFAR100_Add()
+            elif mode == 'dropLocal':
+                model = FedMC_CIFAR100_DropLocal()
             else:
                 print(f"Unimplemented Mode {mode} for FedMC")
     elif algorithm == 'fedsp':
