@@ -14,6 +14,7 @@ from .fedmc.cifar100.CIFAR100 import CIFAR100 as FedMC_CIFAR100
 from .fedmc.cifar100.CIFAR100_ADDITION import CIFAR100 as FedMC_CIFAR100_Add
 from .fedmc.cifar100.CIFAR100_DropLocal import CIFAR100 as FedMC_CIFAR100_DropLocal
 
+from .lgfedavg.mnist.MNIST import MNIST as LG_FedAvg_MNIST
 from .lgfedavg.cifar10.CIFAR10 import CIFAR10 as LG_FedAvg_CIFAR10
 from .lgfedavg.cifar100.CIFAR100 import CIFAR100 as LG_FedAvg_CIFAR100
 
@@ -31,6 +32,7 @@ __all__ = [
     'FedSP_CIFAR100',
     'FedSP_CIFAR100_Add',
     'FedSP_CIFAR100_DropLocal',
+    'LG_FedAvg_MNIST',
     'LG_FedAvg_CIFAR10',
     'LG_FedAvg_CIFAR100'
 ]

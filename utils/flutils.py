@@ -102,7 +102,9 @@ def select_model(algorithm, model_name, mode='concat'):
             else:
                 print(f"Unimplemented Mode {mode} for FedSP")
     elif algorithm == 'lgfedavg':
-        if model_name == 'cifar10':
+        if model_name == 'mnist':
+            model = LG_FedAvg_MNIST()
+        elif model_name == 'cifar10':
             model = LG_FedAvg_CIFAR10()
         if model_name == 'cifar100':
             model = LG_FedAvg_CIFAR100()
