@@ -3,7 +3,7 @@ import wandb
 import numpy as np
 from utils.flutils import *
 from utils.tools import *
-from algorithm.fedsp.client import CLIENT
+from algorithm.fedmc_woat.client import CLIENT
 from tqdm import tqdm
 from prettytable import PrettyTable
 
@@ -22,8 +22,7 @@ class SERVER:
         # affect server initialization
         setup_seed(config.seed)
         kwargs = {'dropout': self.config.dropout}
-        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model, mode=self.config.mode,
-                                  **kwargs)
+        self.model = select_model(algorithm=config.algorithm, model_name=config.model, mode=config.mode, **kwargs)
         self.params = self.model.state_dict()
         self.optimal = {
             'round': 0,
@@ -73,7 +72,7 @@ class SERVER:
                 c = self.selected_clients[k]
                 # surrogate <-- c
                 surrogate.update(c)
-                surrogate.set_shared_params(self.params)
+                surrogate.set_shared_critic_params(self.params)
                 trainSamplesNum, update, loss = surrogate.train(round_th=i)
                 # c <-- surrogate
                 c.update(surrogate)
@@ -99,7 +98,7 @@ class SERVER:
         surrogate = self.surrogates[0]
         for c in self.clients:
             surrogate.update(c)
-            surrogate.set_shared_params(self.params)
+            surrogate.set_shared_critic_params(self.params)
             samplesNum, acc, loss = surrogate.test(dataset=dataset)
             accList.append((samplesNum, acc))
             lossList.append((samplesNum, loss))

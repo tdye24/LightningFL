@@ -21,7 +21,8 @@ class SERVER:
         self.updates = []
         # affect server initialization
         setup_seed(config.seed)
-        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model, mode=self.config.mode)
+        kwargs = {'dropout': self.config.dropout}
+        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model, mode=self.config.mode, **kwargs)
         self.params = self.model.state_dict()
         self.optimal = {
             'round': 0,

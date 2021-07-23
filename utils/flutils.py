@@ -5,6 +5,7 @@ from torchvision.transforms import transforms
 from data.mnist.mnist import get_mnist_dataLoaders
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
 from data.cifar100.cifar100 import get_cifar100_dataLoaders
+from data.femnist.femnist import get_femnist_dataLoaders
 
 # models
 from models import *
@@ -52,11 +53,23 @@ def setup_datasets(dataset, batch_size):
         users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=batch_size,
                                                                     train_transform=trainTransform,
                                                                     test_transform=testTransform)
+    elif dataset == 'femnist':
+        trainTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])
+        testTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])
+        users, trainLoaders, testLoaders = get_femnist_dataLoaders(batch_size=batch_size,
+                                                                   train_transform=trainTransform,
+                                                                   test_transform=testTransform)
 
     return users, trainLoaders, testLoaders
 
 
-def select_model(algorithm, model_name, mode='concat'):
+def select_model(algorithm, model_name, mode='concat', **kwargs):
     model = None
     if algorithm == 'fedavg' or algorithm == 'fedprox':
         if model_name == 'mnist':
@@ -67,38 +80,34 @@ def select_model(algorithm, model_name, mode='concat'):
             model = FedAvg_CIFAR100()
         else:
             print(f"Unimplemented Model {model_name}")
-    elif algorithm == 'fedmc':
+    elif algorithm == 'fedmc' or algorithm == 'fedmc_woat':
         if model_name == 'cifar10':
             if mode == 'concat':
-                model = FedMC_CIFAR10()
+                model = FedMC_CIFAR10(dropout=kwargs['dropout'])
             elif mode == 'addition':
-                model = FedMC_CIFAR10_Add()
+                model = FedMC_CIFAR10_Add(dropout=kwargs['dropout'])
             else:
                 print(f"Unimplemented Mode {mode} for FedMC")
         elif model_name == 'cifar100':
             if mode == 'concat':
-                model = FedMC_CIFAR100()
+                model = FedMC_CIFAR100(dropout=kwargs['dropout'])
             elif mode == 'addition':
-                model = FedMC_CIFAR100_Add()
-            elif mode == 'dropLocal':
-                model = FedMC_CIFAR100_DropLocal()
+                model = FedMC_CIFAR100_Add(dropout=kwargs['dropout'])
             else:
                 print(f"Unimplemented Mode {mode} for FedMC")
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
             if mode == 'concat':
-                model = FedSP_CIFAR10()
+                model = FedSP_CIFAR10(dropout=kwargs['dropout'])
             elif mode == 'addition':
-                model = FedSP_CIFAR10_Add()
+                model = FedSP_CIFAR10_Add(dropout=kwargs['dropout'])
             else:
                 print(f"Unimplemented Mode {mode} for FedSP")
         elif model_name == 'cifar100':
             if mode == 'concat':
-                model = FedSP_CIFAR100()
+                model = FedSP_CIFAR100(dropout=kwargs['dropout'])
             elif mode == 'addition':
-                model = FedSP_CIFAR100_Add()
-            elif mode == 'dropLocal':
-                model = FedSP_CIFAR100_DropLocal()
+                model = FedSP_CIFAR100_Add(dropout=kwargs['dropout'])
             else:
                 print(f"Unimplemented Mode {mode} for FedSP")
     elif algorithm == 'lgfedavg':

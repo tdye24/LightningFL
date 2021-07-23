@@ -43,15 +43,10 @@ class CLIENT:
         gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean()
         return gradient_penalty
 
-    def metaTrain(self, round_th):
+    def train(self, round_th):
         model = self.model
         model.to(self.device)
         model.train()
-
-        # frozen
-        for (key, param) in model.named_parameters():
-            if key.startswith('critic'):
-                param.requires_grad = False
 
         criterion = torch.nn.CrossEntropyLoss()
         optimizer = optim.SGD(params=model.parameters(),
@@ -72,54 +67,6 @@ class CLIENT:
                 loss.backward()
                 optimizer.step()
                 meanLoss.append(clf_loss.item())
-
-        # unfrozen
-        for (key, param) in model.named_parameters():
-            if key.startswith('critic'):
-                param.requires_grad = True
-
-        # loss NAN detection
-        if np.isnan(sum(meanLoss) / len(meanLoss)):
-            print(f"client {self.user_id}, loss NAN")
-            exit(0)
-
-        trainSamplesNum, update = self.trainSamplesNum, self.get_params()
-        return trainSamplesNum, update, sum(meanLoss) / len(meanLoss)
-
-    def metaTest(self, round_th):
-        model = self.model
-        model.to(self.device)
-        model.train()
-
-        # frozen
-        for (key, param) in model.named_parameters():
-            if key.startswith('shared'):
-                param.requires_grad = False
-
-        criterion = torch.nn.CrossEntropyLoss()
-        optimizer = optim.SGD(params=model.parameters(),
-                              lr=self.config.lr * self.config.lrDecay ** (round_th / self.config.decayStep),
-                              weight_decay=1e-4)
-
-        meanLoss = []
-        for epoch in range(self.config.epoch):
-            for step, (data, labels) in enumerate(self.trainLoader):
-                data = data.to(self.device)
-                labels = labels.to(self.device)
-                optimizer.zero_grad()
-                gFeature, lFeature, gValue, lValue, output = model(data)
-                clf_loss = criterion(output, labels)
-                WD = (gValue - lValue).mean()
-                gradient_penalty = self.calc_gradient_penalty(model, gFeature.data, lFeature.data)
-                loss = clf_loss + self.config.mu * (- WD + self.config.omega * gradient_penalty)
-                loss.backward()
-                optimizer.step()
-                meanLoss.append(clf_loss.item())
-
-        # unfrozen
-        for (key, param) in model.named_parameters():
-            if key.startswith('shared'):
-                param.requires_grad = True
 
         # loss NAN detection
         if np.isnan(sum(meanLoss) / len(meanLoss)):

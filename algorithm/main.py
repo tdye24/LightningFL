@@ -7,6 +7,7 @@ import wandb
 from utils.args import *
 from algorithm.fedavg.server import SERVER as FedAvg_SERVER
 from algorithm.fedmc.server import SERVER as FedMC_SERVER
+from algorithm.fedmc_woat.server import SERVER as FedMC_WOAT_SERVER
 from algorithm.fedprox.server import SERVER as FedProx_SERVER
 from algorithm.fedsp.server import SERVER as FedSP_SERVER
 from algorithm.lgfedavg.server import SERVER as LG_FedAvg_SERVER
@@ -31,9 +32,11 @@ if __name__ == '__main__':
     # alpha = args.alpha
     # seed = args.seed
     # cuda = args.cuda
-
     wandb.watch_called = False
     config = wandb.config
+    DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
+                'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
+    args.dropout = DROPOUTS[args.drop]
     config.update(args)
 
     server = None
@@ -47,4 +50,6 @@ if __name__ == '__main__':
         server = FedSP_SERVER(config=config)
     elif config.algorithm == 'lgfedavg':
         server = LG_FedAvg_SERVER(config=config)
+    elif config.algorithm == 'fedmc_woat':
+        server = FedMC_WOAT_SERVER(config=config)
     server.federate()

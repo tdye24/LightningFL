@@ -1,6 +1,6 @@
 import argparse
 
-ALGORITHMS = ['fedavg', 'fedmc', 'fedprox', 'fedsp', 'lgfedavg']
+ALGORITHMS = ['fedavg', 'fedmc', 'fedprox', 'fedsp', 'lgfedavg', 'fedmc_woat']
 DATASETS = ['cifar10', 'mnist', 'cifar100']
 
 
@@ -98,12 +98,17 @@ def parse_args():
 
     parser.add_argument('--mode',
                         help='Integration of global encoder and local encoder',
-                        choices=['concat', 'addition', 'pooling', 'dropLocal'],
+                        choices=['concat', 'addition'],
                         default='concat')
 
     parser.add_argument('--earlyStopping',
                         help='do early-stopping for fedsp or fedmc',
                         type=bool,
                         default=False)
+
+    parser.add_argument('--drop',
+                        help='dropout for cifar10 and cifar100 model, (shared global encoder drop1, shared global encoder drop2, private local encoder drop1, private local encoder drop2, clf drop, critic drop)',
+                        choices=['small', 'big'],
+                        default='small')
 
     return parser.parse_args()
