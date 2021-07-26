@@ -66,7 +66,7 @@ class CIFAR10(nn.Module):
 
 
 if __name__ == '__main__':
-    model = CIFAR10()
+    model = CIFAR10(dropout=[0.75, 0.75, 0.9, 0.9, 0.9, 0.5])
     x = torch.rand((50, 3, 32, 32))
     gFeature_, lFeature_, gValue_, lValue_, output_ = model(x)
     print(f'{x.shape}->gFeature_{gFeature_.shape}')
@@ -90,4 +90,5 @@ if __name__ == '__main__':
             critic_total += param.numel()
     print("Critic. Parameters {}".format(critic_total))
 
-    print((share_encoder_total + critic_total) / 2)
+    print("Without periodically training", (share_encoder_total + critic_total))
+    print("With periodically training", (share_encoder_total + critic_total) / 2)
