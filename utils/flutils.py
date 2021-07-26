@@ -81,7 +81,12 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
         else:
             print(f"Unimplemented Model {model_name}")
     elif algorithm == 'fedmc' or algorithm == 'fedmc_woat':
-        if model_name == 'cifar10':
+        if model_name == 'mnist':
+            if mode == 'concat':
+                model = FedMC_MNIST()
+            else:
+                print(f"Unimplemented Mode {mode} for FedMC")
+        elif model_name == 'cifar10':
             if mode == 'concat':
                 model = FedMC_CIFAR10(dropout=kwargs['dropout'])
             elif mode == 'addition':
