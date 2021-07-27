@@ -34,8 +34,15 @@ if __name__ == '__main__':
     # cuda = args.cuda
     wandb.watch_called = False
     config = wandb.config
-    DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
-                'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
+    if config.dataset == 'cifar100':
+        DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
+                    'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
+    elif config.dataset == 'cifar10':
+        DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
+                    'big': [0.25, 0.25, 0.5, 0.5, 0.75, 0.5]}
+    else:
+        DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
+                    'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
     args.dropout = DROPOUTS[args.drop]
     config.update(args)
 
