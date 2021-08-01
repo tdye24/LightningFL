@@ -6,6 +6,7 @@ from data.mnist.mnist import get_mnist_dataLoaders
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
 from data.cifar100.cifar100 import get_cifar100_dataLoaders
 from data.femnist.femnist import get_femnist_dataLoaders
+from data.har.har import get_har_dataLoaders
 
 # models
 from models import *
@@ -65,6 +66,8 @@ def setup_datasets(dataset, batch_size):
         users, trainLoaders, testLoaders = get_femnist_dataLoaders(batch_size=batch_size,
                                                                    train_transform=trainTransform,
                                                                    test_transform=testTransform)
+    elif dataset == 'har':
+        users, trainLoaders, testLoaders = get_har_dataLoaders(batch_size=10)
 
     return users, trainLoaders, testLoaders
 
@@ -78,6 +81,8 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
             model = FedAvg_CIFAR10()
         elif model_name == 'cifar100':
             model = FedAvg_CIFAR100()
+        elif model_name == 'har':
+            model = FedAvg_HAR()
         else:
             print(f"Unimplemented Model {model_name}")
     elif algorithm == 'fedmc' or algorithm == 'fedmc_woat':
