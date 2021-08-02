@@ -105,6 +105,8 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
                 model = FedMC_CIFAR100_Add(dropout=kwargs['dropout'])
             else:
                 print(f"Unimplemented Mode {mode} for FedMC")
+        elif model_name == 'har':
+            model = FedMC_HAR()
     elif algorithm == 'fedsp':
         if model_name == 'cifar10':
             if mode == 'concat':
@@ -123,6 +125,8 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
         elif model_name == 'mnist':
             if mode == 'concat':
                 model = FedSP_MNIST()
+        elif model_name == 'har':
+            model = FedSP_HAR()
     elif algorithm == 'lgfedavg':
         if model_name == 'mnist':
             model = LG_FedAvg_MNIST()
