@@ -34,14 +34,14 @@ class CIFAR10(nn.Module):
             nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2, 2),
-            nn.Dropout(p=dropout[4]),
+            nn.Dropout(p=dropout[3]),
             nn.Flatten()
         )
 
         self.clf = nn.Sequential(
             nn.Linear(64 * 5 * 5 * 2, 512),
             nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout[5]),
+            nn.Dropout(p=dropout[4]),
             nn.Linear(512, 10)
         )
 
