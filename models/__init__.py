@@ -9,6 +9,7 @@ from .fedsp.cifar100.CIFAR100 import CIFAR100 as FedSP_CIFAR100
 from .fedsp.cifar100.CIFAR100_ADDITION import CIFAR100 as FedSP_CIFAR100_Add
 from .fedsp.mnist.MNIST import MNIST as FedSP_MNIST
 from .fedsp.har.HAR import HAR as FedSP_HAR
+from .fedsp.femnist.FEMNIST import FEMNIST as FedSP_FEMNIST
 
 from .fedmc.cifar10.CIFAR10 import CIFAR10 as FedMC_CIFAR10
 from .fedmc.cifar10.CIFAR10_ADDITION import CIFAR10 as FedMC_CIFAR10_Add
@@ -39,6 +40,7 @@ __all__ = [
     'FedSP_CIFAR100_Add',
     'FedSP_MNIST',
     'FedSP_HAR',
+    'FedSP_FEMNIST',
     'LG_FedAvg_MNIST',
     'LG_FedAvg_CIFAR10',
     'LG_FedAvg_CIFAR100',

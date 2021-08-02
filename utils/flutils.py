@@ -127,6 +127,8 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
                 model = FedSP_MNIST()
         elif model_name == 'har':
             model = FedSP_HAR()
+        elif model_name == 'femnist':
+            model = FedSP_FEMNIST(dropout=kwargs['dropout'])
     elif algorithm == 'lgfedavg':
         if model_name == 'mnist':
             model = LG_FedAvg_MNIST()

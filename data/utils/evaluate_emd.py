@@ -9,13 +9,15 @@ from pyemd import emd
 from data.mnist.mnist import get_mnist_dataLoaders as get_mnist_dataLoaders
 from data.cifar10.cifar10 import get_cifar10_dataLoaders as get_cifar10_dataLoaders
 from data.cifar100.cifar100 import get_cifar100_dataLoaders as get_cifar100_dataLoaders
+from data.har.har import get_har_dataLoaders as get_har_dataLoaders
+from data.femnist.femnist import get_femnist_dataLoaders as get_femnist_dataLoaders
 
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--name',
                     help='name of dataset to evaluate; default: cifar10;',
                     type=str,
-                    choices=['mnist', 'mnist_fedml', 'mnist_ld', 'cifar10', 'cifar10_dirichlet', 'cifar10_ld', 'cifar100'],
+                    choices=['mnist', 'mnist_fedml', 'mnist_ld', 'cifar10', 'cifar10_dirichlet', 'cifar10_ld', 'cifar100', 'har', 'femnist'],
                     default='cifar10')
 
 args = parser.parse_args()
@@ -33,6 +35,12 @@ elif dataset == 'cifar10':
 elif dataset == 'cifar100':
     users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=10)
     N_class = 100
+elif dataset == 'har':
+    users, trainLoaders, testLoaders = get_har_dataLoaders(batch_size=10)
+    N_class = 6
+elif dataset == 'femnist':
+    users, trainLoaders, testLoaders = get_femnist_dataLoaders(batch_size=10)
+    N_class = 62
 else:
     pass
 
