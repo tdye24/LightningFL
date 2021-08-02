@@ -128,8 +128,10 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
             model = LG_FedAvg_MNIST()
         elif model_name == 'cifar10':
             model = LG_FedAvg_CIFAR10()
-        if model_name == 'cifar100':
+        elif model_name == 'cifar100':
             model = LG_FedAvg_CIFAR100()
+        elif model_name == 'har':
+            model = LG_FedAvg_HAR()
     else:
         print(f"Unimplemented Algorithm {algorithm}")
     return model

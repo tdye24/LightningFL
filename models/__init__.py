@@ -18,6 +18,7 @@ from .fedmc.mnist.MNIST import MNIST as FedMC_MNIST
 from .lgfedavg.mnist.MNIST import MNIST as LG_FedAvg_MNIST
 from .lgfedavg.cifar10.CIFAR10 import CIFAR10 as LG_FedAvg_CIFAR10
 from .lgfedavg.cifar100.CIFAR100 import CIFAR100 as LG_FedAvg_CIFAR100
+from .lgfedavg.har.HAR import HAR as LG_FedAvg_HAR
 
 __all__ = [
     'FedAvg_MNIST',
@@ -36,5 +37,6 @@ __all__ = [
     'FedSP_MNIST',
     'LG_FedAvg_MNIST',
     'LG_FedAvg_CIFAR10',
-    'LG_FedAvg_CIFAR100'
+    'LG_FedAvg_CIFAR100',
+    'LG_FedAvg_HAR'
 ]
