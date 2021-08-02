@@ -1,7 +1,7 @@
 import argparse
 
 ALGORITHMS = ['fedavg', 'fedmc', 'fedprox', 'fedsp', 'lgfedavg', 'fedmc_woat']
-DATASETS = ['cifar10', 'mnist', 'cifar100', 'har']
+DATASETS = ['cifar10', 'mnist', 'cifar100', 'har', 'femnist']
 
 
 def parse_args():
