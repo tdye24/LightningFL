@@ -4,6 +4,7 @@ from torchvision.transforms import transforms
 # datasets
 from data.mnist.mnist import get_mnist_dataLoaders
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
+from data.cifar10.cifar10_diri import get_cifar10_dirichlet_dataloaders
 from data.cifar100.cifar100 import get_cifar100_dataLoaders
 from data.femnist.femnist import get_femnist_dataLoaders
 from data.har.har import get_har_dataLoaders
@@ -12,7 +13,7 @@ from data.har.har import get_har_dataLoaders
 from models import *
 
 
-def setup_datasets(dataset, batch_size):
+def setup_datasets(dataset, batch_size, alpha=None):
     users, trainLoaders, testLoaders = [], [], []
     if dataset == 'mnist':
         trainTransform = transforms.Compose([
@@ -39,6 +40,22 @@ def setup_datasets(dataset, batch_size):
         users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=batch_size,
                                                                    train_transform=trainTransform,
                                                                    test_transform=testTransform)
+    elif dataset == 'cifar10_diri':
+        trainTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225])
+        ])
+
+        testTransform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225])
+        ])
+        users, trainLoaders, testLoaders = get_cifar10_dirichlet_dataloaders(users_num=30, alpha=alpha,
+                                                                             batch_size=batch_size,
+                                                                             train_transform=trainTransform,
+                                                                             test_transform=testTransform)
     elif dataset == 'cifar100':
         trainTransform = transforms.Compose([
             transforms.ToTensor(),
