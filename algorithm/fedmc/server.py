@@ -43,7 +43,8 @@ class SERVER:
 
     def setup_clients(self):
         users, trainLoaders, testLoaders = setup_datasets(dataset=self.config.dataset,
-                                                          batch_size=self.config.batchSize)
+                                                          batch_size=self.config.batchSize,
+                                                          alpha=self.config.alpha)
         clients = [
             CLIENT(user_id=user_id,
                    trainLoader=trainLoaders[user_id],
