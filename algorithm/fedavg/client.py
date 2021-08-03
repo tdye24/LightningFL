@@ -1,6 +1,7 @@
 import torch
 from utils.flutils import *
 import torch.optim as optim
+import numpy as np
 
 
 class CLIENT:
