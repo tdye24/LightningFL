@@ -55,6 +55,7 @@ class CLIENT:
                 difference = self.model_difference(self.startPoint, model)
                 loss = criterion(output, labels) + self.config.diffCo * difference
                 loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
                 optimizer.step()
                 meanLoss.append(loss.item())
 

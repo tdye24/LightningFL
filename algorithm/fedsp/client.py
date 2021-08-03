@@ -50,6 +50,7 @@ class CLIENT:
                 output = model(data)
                 loss = criterion(output, labels)
                 loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
                 optimizer.step()
                 meanLoss.append(loss.item())
 

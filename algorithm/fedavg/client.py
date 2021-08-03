@@ -40,10 +40,16 @@ class CLIENT:
                 output = model(data)
                 loss = criterion(output, labels)
                 loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
                 optimizer.step()
                 meanLoss.append(loss.item())
 
         trainSamplesNum, update = self.trainSamplesNum, self.get_params()
+
+        if np.isnan(sum(meanLoss) / len(meanLoss)):
+            print(f"client {self.user_id}, loss NAN")
+            exit(0)
+
         return trainSamplesNum, update, sum(meanLoss) / len(meanLoss)
 
     def test(self, dataset='test'):

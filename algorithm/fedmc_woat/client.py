@@ -65,6 +65,7 @@ class CLIENT:
                 gradient_penalty = self.calc_gradient_penalty(model, gFeature.data, lFeature.data)
                 loss = clf_loss + self.config.mu * (- WD + self.config.omega * gradient_penalty)
                 loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
                 optimizer.step()
                 meanLoss.append(clf_loss.item())
 
