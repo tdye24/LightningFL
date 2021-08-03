@@ -11,7 +11,8 @@ from utils.tools import setup_seed
 import matplotlib.pyplot as plt
 
 
-def partition_data(users_num=100, alpha=0.5):
+def partition_data(users_num=100, alpha=0.5, **data_kwargs):
+    x_train, y_train, x_test, y_test = data_kwargs['x_train'], data_kwargs['y_train'], data_kwargs['x_test'], data_kwargs['y_test']
     client_ids = {i: {'train': [], 'test': []} for i in range(100)}
     for k in range(10):  # 10个类别
         train_ids, test_ids = np.where(y_train == k)[0], np.where(y_test == k)[0]
@@ -73,7 +74,7 @@ def get_cifar10_dirichlet_dataloaders(users_num=100, batch_size=50, alpha=0.5, t
                                                                  train_transform=train_transform,
                                                                  test_transform=test_transform, **data_kwargs)
         return users, train_loaders, test_loaders
-    client_ids = partition_data(users_num=users_num, alpha=alpha)
+    client_ids = partition_data(users_num=users_num, alpha=alpha, **data_kwargs)
     train_loaders = {}
     test_loaders = {}
     users = []
@@ -85,7 +86,7 @@ def get_cifar10_dirichlet_dataloaders(users_num=100, batch_size=50, alpha=0.5, t
         # assert len(test_ids) > 0
         if len(train_ids) > 0 and len(test_ids) > 0:
             users.append(user)
-            print("user: ", len(train_ids), len(test_ids))
+            # print("user: ", len(train_ids), len(test_ids))
 
             dataset = CIFAR10_DATASET(X=x_train, Y=y_train, ids=train_ids, transform=train_transform)
             train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=0)
@@ -94,7 +95,7 @@ def get_cifar10_dirichlet_dataloaders(users_num=100, batch_size=50, alpha=0.5, t
             test_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=0)
             test_loaders[user] = test_loader
 
-    print("total users: ", len(users))
+    # print("total users: ", len(users))
     return users, train_loaders, test_loaders
 
 
@@ -179,7 +180,7 @@ def get_extreme_non_iid(num_users=100, batch_size=50, train_transform=None, test
 
 if __name__ == '__main__':
     user_num = 30
-    alpha = 0.0001
+    alpha = 0.3
     train_transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.5, 0.5, 0.5],
