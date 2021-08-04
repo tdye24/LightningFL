@@ -150,7 +150,7 @@ def select_model(algorithm, model_name, mode='concat', **kwargs):
         if model_name == 'mnist':
             model = LG_FedAvg_MNIST()
         elif model_name == 'cifar10':
-            model = LG_FedAvg_CIFAR10()
+            model = LG_FedAvg_CIFAR10(dropout=kwargs['dropout'])
         elif model_name == 'cifar100':
             model = LG_FedAvg_CIFAR100()
         elif model_name == 'har':

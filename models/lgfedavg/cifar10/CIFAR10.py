@@ -2,7 +2,7 @@ import torch.nn as nn
 
 
 class CIFAR10(nn.Module):
-    def __init__(self):
+    def __init__(self, dropout):
         super(CIFAR10, self).__init__()
         self.conv = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=32, kernel_size=(3, 3)),
@@ -10,20 +10,20 @@ class CIFAR10(nn.Module):
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(3, 3)),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2, 2),
-            nn.Dropout(p=0.25),
+            nn.Dropout(p=dropout[0]),
             nn.Conv2d(in_channels=64, out_channels=64, kernel_size=(3, 3)),
             nn.ReLU(inplace=True),
             nn.Conv2d(in_channels=64, out_channels=64, kernel_size=(3, 3)),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2, 2),
-            nn.Dropout(p=0.25),
+            nn.Dropout(p=dropout[1]),
             nn.Flatten()
         )
 
         self.clf = nn.Sequential(
             nn.Linear(5 * 5 * 64, 512),
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.5),
+            nn.Dropout(p=dropout[2]),
             nn.Linear(512, 10)
         )
 
@@ -36,7 +36,7 @@ class CIFAR10(nn.Module):
 
 if __name__ == '__main__':
     import torch
-    model = CIFAR10()
+    model = CIFAR10(dropout=[0.25, 0.25, 0.5])
     _x = torch.rand((50, 3, 32, 32))
     _output = model(_x)
     print(f'{_x.shape}->{_output.shape}')
