@@ -40,7 +40,7 @@ if __name__ == '__main__':
     elif config.dataset == 'cifar10' or config.dataset == 'cifar10_diri':
         if config.algorithm in ['fedsp', 'fedmc', 'fedmc_woat']:
             DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
-                        'big': [0.25, 0.25, 0.75, 0.75, 0.75, 0.5]}
+                        'big': [0.5, 0.5, 0.9, 0.9, 0.9, 0.5]}
         elif config.algorithm in ['lgfedavg']:
             DROPOUTS = {'small': [0.25, 0.25, 0.5],
                         'big': [0.5, 0.5, 0.75]}
