@@ -34,6 +34,7 @@ if __name__ == '__main__':
     # cuda = args.cuda
     wandb.watch_called = False
     config = wandb.config
+    DROPOUTS = None
     if config.dataset == 'cifar100':
         DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
                     'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
@@ -44,8 +45,6 @@ if __name__ == '__main__':
         elif config.algorithm in ['lgfedavg']:
             DROPOUTS = {'small': [0.25, 0.25, 0.5],
                         'big': [0.5, 0.5, 0.75]}
-        else:
-            DROPOUTS = None
     elif config.dataset == 'femnist':
         DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
                     'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
