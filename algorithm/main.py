@@ -51,7 +51,8 @@ if __name__ == '__main__':
     else:
         DROPOUTS = {'small': [0.25, 0.25, 0.25, 0.25, 0.5, 0.5],
                     'big': [0.75, 0.75, 0.9, 0.9, 0.9, 0.5]}
-    args.dropout = DROPOUTS[args.drop]
+    if DROPOUTS is not None:
+        args.dropout = DROPOUTS[args.drop]
     config.update(args)
 
     server = None
