@@ -11,14 +11,20 @@ from data.cifar10.cifar10 import get_cifar10_dataLoaders as get_cifar10_dataLoad
 from data.cifar100.cifar100 import get_cifar100_dataLoaders as get_cifar100_dataLoaders
 from data.har.har import get_har_dataLoaders as get_har_dataLoaders
 from data.femnist.femnist import get_femnist_dataLoaders as get_femnist_dataLoaders
+from data.cifar10.cifar10_diri import get_cifar10_dirichlet_dataloaders as get_cifar10_dirichlet_dataLoaders
 
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--name',
                     help='name of dataset to evaluate; default: cifar10;',
                     type=str,
-                    choices=['mnist', 'mnist_fedml', 'mnist_ld', 'cifar10', 'cifar10_dirichlet', 'cifar10_ld', 'cifar100', 'har', 'femnist'],
+                    choices=['mnist', 'mnist_fedml', 'mnist_ld', 'cifar10', 'cifar10_diri', 'cifar10_ld', 'cifar100', 'har', 'femnist'],
                     default='cifar10')
+
+parser.add_argument('--alpha',
+                    help='alpha for dirichlet distribution',
+                    type=float,
+                    default=0.5)
 
 args = parser.parse_args()
 dataset = args.name
@@ -31,6 +37,9 @@ if dataset == 'mnist':
     N_class = 10
 elif dataset == 'cifar10':
     users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=10)
+    N_class = 10
+elif dataset == 'cifar10_diri':
+    users, trainLoaders, testLoaders = get_cifar10_dirichlet_dataLoaders(batch_size=10, alpha=args.alpha)
     N_class = 10
 elif dataset == 'cifar100':
     users, trainLoaders, testLoaders = get_cifar100_dataLoaders(batch_size=10)
@@ -70,12 +79,12 @@ for num, histogram in users_histogram:
     total_dataset_histogram = np.add(total_dataset_histogram, num * np.array(histogram))
 
 total_dataset_histogram /= total_dataset_num_samples
-print(total_dataset_histogram)
+# print(total_dataset_histogram)
 
 distances = []
 
 for num, histogram in users_histogram:
-    print(total_dataset_histogram, histogram)
+    # print(total_dataset_histogram, histogram)
     d = np.linalg.norm(total_dataset_histogram - histogram, ord=1)
     distances.append(d)
 

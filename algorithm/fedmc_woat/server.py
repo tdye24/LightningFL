@@ -105,7 +105,16 @@ class SERVER:
             lossList.append((samplesNum, loss))
         return accList, lossList
 
-    def printAndLog(self, round_th, trainingAccList, testAccList, trainingLossList, testLossList):
+    def save_model(self):
+        path = f'../../saved_models/fedmc_woat/{self.config.dataset}_{self.config.model}'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        path = f'{path}/model.pkl'
+        print(f"model saved to：{path}")
+        torch.save(self.params, path)
+
+    @staticmethod
+    def printAndLog(round_th, trainingAccList, testAccList, trainingLossList, testLossList):
         trainingAcc = avgMetric(trainingAccList)
         trainingLoss = avgMetric(trainingLossList)
         testAcc = avgMetric(testAccList)

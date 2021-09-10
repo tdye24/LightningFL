@@ -22,7 +22,8 @@ class SERVER:
         # affect server initialization
         setup_seed(config.seed)
         kwargs = {'dropout': self.config.dropout}
-        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model, mode=self.config.mode, **kwargs)
+        self.model = select_model(algorithm=self.config.algorithm, model_name=self.config.model, mode=self.config.mode,
+                                  **kwargs)
         self.params = self.model.state_dict()
         self.optimal = {
             'round': 0,
@@ -127,7 +128,16 @@ class SERVER:
             lossList.append((samplesNum, loss))
         return accList, lossList
 
-    def printAndLog(self, round_th, trainingAccList, testAccList, trainingLossList, testLossList):
+    def save_model(self):
+        path = f'../../saved_models/fedmc/{self.config.dataset}_{self.config.model}'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        path = f'{path}/model.pkl'
+        print(f"model saved to：{path}")
+        torch.save(self.params, path)
+
+    @staticmethod
+    def printAndLog(round_th, trainingAccList, testAccList, trainingLossList, testLossList):
         trainingAcc = avgMetric(trainingAccList)
         trainingLoss = avgMetric(trainingLossList)
         testAcc = avgMetric(testAccList)

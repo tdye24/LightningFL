@@ -69,3 +69,5 @@ if __name__ == '__main__':
     elif config.algorithm == 'fedmc_woat':
         server = FedMC_WOAT_SERVER(config=config)
     server.federate()
+    if config.algorithm in ['fedmc', 'fedmc_woat']:
+        server.save_model()

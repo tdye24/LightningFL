@@ -33,7 +33,7 @@ users_acc_lst = {}
 
 for user in users:
     trainLoader, testLoader = trainLoaders[user], testLoaders[user]
-    setup_seed(36)
+    setup_seed(12)
     model = MNIST()
     model.cuda()
     model.train()

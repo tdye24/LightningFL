@@ -10,16 +10,16 @@ from torchvision.transforms import transforms
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), '../../../')))
 
 from data.cifar10.cifar10 import get_cifar10_dataLoaders
+from data.cifar10.cifar10_diri import get_cifar10_dirichlet_dataloaders
 
 from models.fedavg.cifar10.CIFAR10 import CIFAR10
 from utils.tools import setup_seed
 
-
 trainTransform = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                 std=[0.229, 0.224, 0.225])
-        ])
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
+])
 
 testTransform = transforms.Compose([
     transforms.ToTensor(),
@@ -27,8 +27,11 @@ testTransform = transforms.Compose([
                          std=[0.229, 0.224, 0.225])
 ])
 
-users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=50, train_transform=trainTransform,
-                                                           test_transform=testTransform)
+# users, trainLoaders, testLoaders = get_cifar10_dataLoaders(batch_size=50, train_transform=trainTransform,
+#                                                            test_transform=testTransform)
+
+users, trainLoaders, testLoaders = get_cifar10_dirichlet_dataloaders(users_num=30, alpha=0.5, batch_size=50, train_transform=trainTransform,
+                                                                     test_transform=testTransform)
 
 epoch = 100
 lr = 0.1
